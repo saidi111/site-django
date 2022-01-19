@@ -1,9 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from .formulaire import contactForm
 # Create your views here.
 def index(request):
     return render(request,'index.html')
 def contact(request):
-    return  render(request,'contact.html')
+
+    if request.method == 'POST':
+
+        form=contactForm(request.POST, request.FILES).save()
+        return redirect('/home')
+    else:
+        form=contactForm()
+    return  render(request,'contact.html',{'form': form})
 def about(request):
     return  render(request,'about.html')
 def service(request):
